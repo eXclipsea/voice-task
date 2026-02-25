@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Mic, Square, Play, Trash2, CheckCircle, Clock, AlertTriangle, Sparkles, Save, List, Calendar, Settings } from 'lucide-react';
+import { Mic, Square, Play, Trash2, CheckCircle, Clock, AlertTriangle, Sparkles, Save, List, Calendar, Settings, Download } from 'lucide-react';
 
 interface Task {
   id: string;
@@ -163,6 +163,18 @@ export default function Home() {
           </div>
           <p className="text-neutral-500">AI voice-to-text task organizer</p>
         </div>
+
+        {/* Download Banner */}
+        <a
+          href="https://github.com/eXclipsea/voice-task/releases/download/v0.1.0/VoiceTask_0.1.0_aarch64.dmg"
+          className="flex items-center justify-between p-3 mb-8 rounded-lg border border-violet-400/20 hover:bg-violet-400/5 transition-colors"
+        >
+          <span className="text-sm text-neutral-400">Get the Mac app</span>
+          <span className="flex items-center gap-1.5 text-xs font-medium text-violet-400">
+            <Download className="w-3.5 h-3.5" />
+            Download .dmg
+          </span>
+        </a>
 
         {/* Navigation Tabs */}
         <div className="flex gap-1 mb-10 border-b border-neutral-800">
