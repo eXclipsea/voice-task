@@ -153,21 +153,19 @@ export default function Home() {
   const completedTasks = tasks.filter(t => t.category === 'completed');
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="min-h-screen bg-black text-white">
+      <div className="max-w-5xl mx-auto px-6 py-12">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="bg-amber-600 p-3 rounded-full">
-              <Mic className="w-8 h-8 text-white" />
-            </div>
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-2">
+            <Mic className="w-6 h-6 text-violet-400" />
+            <h1 className="text-2xl font-semibold tracking-tight">VoiceTask</h1>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">VoiceTask</h1>
-          <p className="text-gray-400">AI voice-to-text task organizer</p>
+          <p className="text-neutral-500">AI voice-to-text task organizer</p>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
+        <div className="flex gap-1 mb-10 border-b border-neutral-800">
           {[
             { id: 'record', label: 'Record', icon: Mic },
             { id: 'tasks', label: 'Tasks', icon: List },
@@ -177,16 +175,16 @@ export default function Home() {
             <button
               key={id}
               onClick={() => setActiveTab(id as any)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all ${
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors border-b-2 -mb-px ${
                 activeTab === id
-                  ? 'bg-amber-600 text-white'
-                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                  ? 'border-violet-400 text-white'
+                  : 'border-transparent text-neutral-500 hover:text-neutral-300'
               }`}
             >
               <Icon className="w-4 h-4" />
               {label}
               {id === 'tasks' && tasks.length > 0 && (
-                <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+                <span className="text-xs text-violet-400">
                   {tasks.filter(t => t.category !== 'completed').length}
                 </span>
               )}
@@ -197,40 +195,40 @@ export default function Home() {
         {/* Record Tab */}
         {activeTab === 'record' && (
           <div className="max-w-2xl mx-auto">
-            <div className="bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-700 text-center">
-              <h2 className="text-2xl font-semibold text-white mb-4">Voice Recorder</h2>
-              <p className="text-gray-400 mb-8">
+            <div className="rounded-xl border border-neutral-800 p-8 text-center">
+              <h2 className="text-lg font-medium mb-2">Voice Recorder</h2>
+              <p className="text-neutral-500 text-sm mb-8">
                 Record your thoughts, ideas, or to-do list. AI will transcribe and organize tasks automatically.
               </p>
               
-              <div className="flex justify-center mb-8">
+              <div className="flex justify-center mb-6">
                 <button
                   onClick={isRecording ? stopRecording : startRecording}
-                  className={`w-32 h-32 rounded-full flex items-center justify-center transition-all ${
+                  className={`w-24 h-24 rounded-full flex items-center justify-center transition-all border-2 ${
                     isRecording 
-                      ? 'bg-red-600 hover:bg-red-700 animate-pulse' 
-                      : 'bg-amber-600 hover:bg-amber-700'
+                      ? 'border-red-500 bg-red-500/10 animate-pulse' 
+                      : 'border-violet-400 bg-violet-400/10 hover:bg-violet-400/20'
                   }`}
                 >
                   {isRecording ? (
-                    <Square className="w-12 h-12 text-white" />
+                    <Square className="w-8 h-8 text-red-400" />
                   ) : (
-                    <Mic className="w-12 h-12 text-white" />
+                    <Mic className="w-8 h-8 text-violet-400" />
                   )}
                 </button>
               </div>
               
-              <p className="text-gray-500">
+              <p className="text-neutral-600 text-sm">
                 {isRecording ? 'Recording... Click to stop' : 'Click to start recording'}
               </p>
 
               {selectedRecording && (
-                <div className="mt-8 p-4 bg-gray-900 rounded-xl">
+                <div className="mt-8 p-4 rounded-lg border border-neutral-800">
                   <audio src={selectedRecording.url} controls className="w-full mb-4" />
                   <button
                     onClick={() => transcribeRecording(selectedRecording)}
                     disabled={transcribing}
-                    className="w-full bg-amber-600 hover:bg-amber-700 disabled:bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+                    className="w-full bg-violet-500 hover:bg-violet-600 disabled:bg-neutral-800 disabled:text-neutral-500 text-white font-medium py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm"
                   >
                     <Sparkles className="w-4 h-4" />
                     {transcribing ? 'Transcribing...' : 'Transcribe & Organize'}
@@ -240,18 +238,18 @@ export default function Home() {
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-4 mt-6">
-              <div className="bg-gray-800 rounded-xl p-4 text-center border border-gray-700">
-                <div className="text-2xl font-bold text-red-400">{urgentTasks.length}</div>
-                <div className="text-sm text-gray-400">Urgent</div>
+            <div className="grid grid-cols-3 gap-3 mt-6">
+              <div className="rounded-lg border border-neutral-800 p-4 text-center">
+                <div className="text-xl font-semibold text-red-400">{urgentTasks.length}</div>
+                <div className="text-xs text-neutral-500 mt-1">Urgent</div>
               </div>
-              <div className="bg-gray-800 rounded-xl p-4 text-center border border-gray-700">
-                <div className="text-2xl font-bold text-amber-400">{laterTasks.length}</div>
-                <div className="text-sm text-gray-400">Later</div>
+              <div className="rounded-lg border border-neutral-800 p-4 text-center">
+                <div className="text-xl font-semibold text-violet-400">{laterTasks.length}</div>
+                <div className="text-xs text-neutral-500 mt-1">Later</div>
               </div>
-              <div className="bg-gray-800 rounded-xl p-4 text-center border border-gray-700">
-                <div className="text-2xl font-bold text-emerald-400">{completedTasks.length}</div>
-                <div className="text-sm text-gray-400">Done</div>
+              <div className="rounded-lg border border-neutral-800 p-4 text-center">
+                <div className="text-xl font-semibold text-green-400">{completedTasks.length}</div>
+                <div className="text-xs text-neutral-500 mt-1">Done</div>
               </div>
             </div>
           </div>
@@ -261,23 +259,23 @@ export default function Home() {
         {activeTab === 'tasks' && (
           <div className="max-w-3xl mx-auto">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-semibold text-white">Your Tasks</h2>
-              <span className="text-gray-400">{tasks.filter(t => t.category !== 'completed').length} active</span>
+              <h2 className="text-lg font-medium">Your Tasks</h2>
+              <span className="text-neutral-500 text-sm">{tasks.filter(t => t.category !== 'completed').length} active</span>
             </div>
 
             {tasks.length === 0 ? (
-              <div className="text-center py-12 bg-gray-800 rounded-xl border border-gray-700">
-                <List className="w-16 h-16 mx-auto mb-4 text-gray-600" />
-                <p className="text-gray-400">No tasks yet.</p>
-                <p className="text-gray-500 text-sm mt-2">Record a voice memo and transcribe it!</p>
+              <div className="text-center py-16 rounded-xl border border-neutral-800">
+                <List className="w-10 h-10 mx-auto mb-3 text-neutral-700" />
+                <p className="text-neutral-500 text-sm">No tasks yet.</p>
+                <p className="text-neutral-600 text-xs mt-1">Record a voice memo and transcribe it!</p>
               </div>
             ) : (
               <div className="space-y-6">
                 {/* Urgent Tasks */}
                 {urgentTasks.length > 0 && (
                   <div>
-                    <h3 className="text-red-400 font-semibold mb-3 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4" />
+                    <h3 className="text-red-400 text-sm font-medium mb-3 flex items-center gap-2">
+                      <AlertTriangle className="w-3.5 h-3.5" />
                       Urgent ({urgentTasks.length})
                     </h3>
                     <div className="space-y-2">
@@ -297,8 +295,8 @@ export default function Home() {
                 {/* Later Tasks */}
                 {laterTasks.length > 0 && (
                   <div>
-                    <h3 className="text-amber-400 font-semibold mb-3 flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
+                    <h3 className="text-violet-400 text-sm font-medium mb-3 flex items-center gap-2">
+                      <Clock className="w-3.5 h-3.5" />
                       Later ({laterTasks.length})
                     </h3>
                     <div className="space-y-2">
@@ -318,8 +316,8 @@ export default function Home() {
                 {/* Completed Tasks */}
                 {completedTasks.length > 0 && (
                   <div>
-                    <h3 className="text-emerald-400 font-semibold mb-3 flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
+                    <h3 className="text-green-400 text-sm font-medium mb-3 flex items-center gap-2">
+                      <CheckCircle className="w-3.5 h-3.5" />
                       Completed ({completedTasks.length})
                     </h3>
                     <div className="space-y-2 opacity-60">
@@ -343,41 +341,41 @@ export default function Home() {
         {/* Recordings Tab */}
         {activeTab === 'recordings' && (
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-semibold text-white mb-6">Saved Recordings</h2>
+            <h2 className="text-lg font-medium mb-6">Saved Recordings</h2>
             
             {recordings.length === 0 ? (
-              <div className="text-center py-12 bg-gray-800 rounded-xl border border-gray-700">
-                <Save className="w-16 h-16 mx-auto mb-4 text-gray-600" />
-                <p className="text-gray-400">No recordings yet.</p>
+              <div className="text-center py-16 rounded-xl border border-neutral-800">
+                <Save className="w-10 h-10 mx-auto mb-3 text-neutral-700" />
+                <p className="text-neutral-500 text-sm">No recordings yet.</p>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {recordings.map(recording => (
-                  <div key={recording.id} className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <span className="text-gray-400 text-sm">
+                  <div key={recording.id} className="rounded-xl border border-neutral-800 p-5">
+                    <div className="flex justify-between items-start mb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-neutral-500 text-xs">
                           {new Date(recording.createdAt).toLocaleString()}
                         </span>
                         {recording.transcript && (
-                          <span className="ml-3 bg-emerald-900 text-emerald-300 px-2 py-1 rounded text-xs">
+                          <span className="text-green-400 text-xs font-medium">
                             Transcribed
                           </span>
                         )}
                       </div>
                       <button
                         onClick={() => deleteRecording(recording.id)}
-                        className="text-gray-500 hover:text-red-400"
+                        className="text-neutral-600 hover:text-red-400"
                       >
-                        <Trash2 className="w-5 h-5" />
+                        <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                     
-                    <audio src={recording.url} controls className="w-full mb-4" />
+                    <audio src={recording.url} controls className="w-full mb-3" />
                     
                     {recording.transcript && (
-                      <div className="bg-gray-900 rounded-lg p-4 mt-4">
-                        <p className="text-gray-300 text-sm whitespace-pre-line">{recording.transcript}</p>
+                      <div className="rounded-lg border border-neutral-800 p-4 mt-3">
+                        <p className="text-neutral-300 text-sm whitespace-pre-line">{recording.transcript}</p>
                       </div>
                     )}
                     
@@ -385,7 +383,7 @@ export default function Home() {
                       <button
                         onClick={() => transcribeRecording(recording)}
                         disabled={transcribing}
-                        className="mt-4 w-full bg-amber-600 hover:bg-amber-700 disabled:bg-gray-600 text-white py-2 rounded-lg transition-colors"
+                        className="mt-3 w-full bg-violet-500 hover:bg-violet-600 disabled:bg-neutral-800 disabled:text-neutral-500 text-white py-2 rounded-lg transition-colors text-sm"
                       >
                         {transcribing ? 'Transcribing...' : 'Transcribe'}
                       </button>
@@ -400,16 +398,16 @@ export default function Home() {
         {/* Settings Tab */}
         {activeTab === 'settings' && (
           <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-semibold text-white mb-6">Settings</h2>
+            <h2 className="text-lg font-medium mb-6">Settings</h2>
             
-            <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Data Management</h3>
+            <div className="rounded-xl border border-neutral-800 p-6 mb-4">
+              <h3 className="text-sm font-medium mb-4">Data Management</h3>
               <div className="space-y-3">
                 <button
                   onClick={() => {
                     if (confirm('Clear all tasks?')) setTasks([]);
                   }}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg transition-colors"
+                  className="w-full border border-red-400/20 text-red-400 hover:bg-red-400/10 py-2.5 rounded-lg transition-colors text-sm"
                 >
                   Clear All Tasks ({tasks.length})
                 </button>
@@ -420,16 +418,16 @@ export default function Home() {
                       setSelectedRecording(null);
                     }
                   }}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg transition-colors"
+                  className="w-full border border-red-400/20 text-red-400 hover:bg-red-400/10 py-2.5 rounded-lg transition-colors text-sm"
                 >
                   Clear All Recordings ({recordings.length})
                 </button>
               </div>
             </div>
 
-            <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-              <h3 className="text-lg font-semibold text-white mb-4">About</h3>
-              <p className="text-gray-400">
+            <div className="rounded-xl border border-neutral-800 p-6">
+              <h3 className="text-sm font-medium mb-2">About</h3>
+              <p className="text-neutral-500 text-sm">
                 VoiceTask uses OpenAI Whisper API for transcription and GPT-4o-mini for task organization.
               </p>
             </div>
@@ -453,25 +451,25 @@ function TaskItem({
   onPriorityChange: (p: 'low' | 'medium' | 'high') => void;
 }) {
   const priorityColors = {
-    low: 'bg-gray-700 text-gray-300',
-    medium: 'bg-amber-700 text-amber-300',
-    high: 'bg-red-700 text-red-300'
+    low: 'text-neutral-500 border-neutral-800',
+    medium: 'text-violet-400 border-violet-400/20',
+    high: 'text-red-400 border-red-400/20'
   };
 
   return (
-    <div className="bg-gray-800 rounded-xl p-4 border border-gray-700 flex items-center justify-between">
+    <div className="rounded-lg border border-neutral-800 p-3 flex items-center justify-between">
       <div className="flex items-center gap-3">
         <button
           onClick={onToggle}
-          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
+          className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
             task.category === 'completed'
-              ? 'bg-emerald-600 border-emerald-600'
-              : 'border-gray-500 hover:border-emerald-500'
+              ? 'bg-green-500 border-green-500'
+              : 'border-neutral-600 hover:border-violet-400'
           }`}
         >
-          {task.category === 'completed' && <CheckCircle className="w-4 h-4 text-white" />}
+          {task.category === 'completed' && <CheckCircle className="w-3 h-3 text-white" />}
         </button>
-        <span className={`text-gray-200 ${task.category === 'completed' ? 'line-through opacity-50' : ''}`}>
+        <span className={`text-sm ${task.category === 'completed' ? 'line-through text-neutral-600' : 'text-neutral-200'}`}>
           {task.text}
         </span>
       </div>
@@ -479,7 +477,7 @@ function TaskItem({
         <select
           value={task.priority}
           onChange={(e) => onPriorityChange(e.target.value as any)}
-          className={`text-xs px-2 py-1 rounded ${priorityColors[task.priority]}`}
+          className={`text-xs px-2 py-0.5 rounded border bg-transparent ${priorityColors[task.priority]}`}
         >
           <option value="low">Low</option>
           <option value="medium">Medium</option>
@@ -487,9 +485,9 @@ function TaskItem({
         </select>
         <button
           onClick={onDelete}
-          className="text-gray-500 hover:text-red-400"
+          className="text-neutral-600 hover:text-red-400"
         >
-          <Trash2 className="w-4 h-4" />
+          <Trash2 className="w-3.5 h-3.5" />
         </button>
       </div>
     </div>
