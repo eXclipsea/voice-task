@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Mic, Square, Play, Trash2, CheckCircle, Clock, AlertTriangle, Sparkles, Save, List, Calendar, Settings, Download } from 'lucide-react';
+import { Mic, Square, Play, Trash2, CheckCircle, Clock, AlertTriangle, Sparkles, Save, List, Calendar, Settings, Download, X } from 'lucide-react';
 
 interface Task {
   id: string;
@@ -25,6 +25,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'record' | 'tasks' | 'recordings' | 'settings'>('record');
   const [isRecording, setIsRecording] = useState(false);
   const [recordings, setRecordings] = useState<Recording[]>([]);
+  const [showBanner, setShowBanner] = useState(true);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [transcribing, setTranscribing] = useState(false);
   const [selectedRecording, setSelectedRecording] = useState<Recording | null>(null);
@@ -154,6 +155,28 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      {/* Download Popup */}
+      {showBanner && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-violet-500/10 backdrop-blur-xl border-b border-violet-400/20">
+          <div className="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
+            <a
+              href="https://github.com/eXclipsea/voice-task/releases/download/v0.1.0/VoiceTask_0.1.0_aarch64.dmg"
+              className="flex items-center gap-2 text-[13px] text-white/80 hover:text-white transition-colors"
+            >
+              <Download className="w-3.5 h-3.5 text-violet-400" />
+              <span>Get <strong>VoiceTask</strong> for Mac</span>
+              <span className="text-violet-400 font-medium ml-1">Download &rarr;</span>
+            </a>
+            <button
+              onClick={() => setShowBanner(false)}
+              className="text-white/30 hover:text-white/60 transition-colors p-1"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-5xl mx-auto px-6 py-12">
         {/* Header */}
         <div className="mb-10">
@@ -163,18 +186,6 @@ export default function Home() {
           </div>
           <p className="text-neutral-500">AI voice-to-text task organizer</p>
         </div>
-
-        {/* Download Banner */}
-        <a
-          href="https://github.com/eXclipsea/voice-task/releases/download/v0.1.0/VoiceTask_0.1.0_aarch64.dmg"
-          className="flex items-center justify-between p-3 mb-8 rounded-lg border border-violet-400/20 hover:bg-violet-400/5 transition-colors"
-        >
-          <span className="text-sm text-neutral-400">Get the Mac app</span>
-          <span className="flex items-center gap-1.5 text-xs font-medium text-violet-400">
-            <Download className="w-3.5 h-3.5" />
-            Download .dmg
-          </span>
-        </a>
 
         {/* Navigation Tabs */}
         <div className="flex gap-1 mb-10 border-b border-neutral-800">
